@@ -175,27 +175,27 @@ class HiddenPrints:
         self.tqdm_aux = None
 
     def __enter__(self):
-        import tqdm  # We need to do an extra step to hide tqdm outputs. Does not work in Jupyter Notebooks.
+        #import tqdm  # We need to do an extra step to hide tqdm outputs. Does not work in Jupyter Notebooks.
 
         def nop(it, *a, **k):
             return it
 
-        self.tqdm_aux = tqdm.tqdm
-        tqdm.tqdm = nop
+        #self.tqdm_aux = tqdm.tqdm
+        #tqdm.tqdm = nop
 
         if self.model_name is not None:
             self.console.print(f'Loading {self.model_name}...')
         self._original_stdout = sys.stdout
         self._original_stderr = sys.stderr
-        sys.stdout = open(os.devnull, 'w')
+        #sys.stdout = open(os.devnull, 'w')
         # May not be what we always want, but some annoying warnings end up to stderr
-        sys.stderr = open(os.devnull, 'w')
+        #sys.stderr = open(os.devnull, 'w')
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        sys.stdout.close()
-        sys.stdout = self._original_stdout
-        sys.stdout = self._original_stderr
+        #sys.stdout.close()
+        #sys.stdout = self._original_stdout
+        #sys.stdout = self._original_stderr
         if self.model_name is not None:
             self.console.print(f'{self.model_name} loaded ')
-        import tqdm
-        tqdm.tqdm = self.tqdm_aux
+        #import tqdm
+        #tqdm.tqdm = self.tqdm_aux
